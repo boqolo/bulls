@@ -1,4 +1,4 @@
-# Hw05
+# 4Digits (Bulls n Cows)
 
 To start your Phoenix server:
 
