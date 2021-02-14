@@ -1,8 +1,15 @@
 defmodule Hw05Web.UserSocket do
   use Phoenix.Socket
 
+  # THIS IS THE SOCKET HANDLER!!!
+  # Here we are setting up a Channel connection
+  # via websockets.
+
   ## Channels
-  # channel "room:*", Hw05Web.RoomChannel
+  # TODO: set up Channel routes here. They will pattern
+  # match on Topic strings and dispatch to the
+  # given Channel module.
+  channel "game:*", Hw05Web.GameChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

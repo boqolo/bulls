@@ -10,6 +10,10 @@ defmodule Hw05Web.Endpoint do
     signing_salt: "AD3tStw+"
   ]
 
+  # This "routes" a url to a socket handler.
+  # They are called when setting up a Channel
+  # connection. This can set up connections to any Topics.
+  # Can also set default data in socket.assigns here.
   socket "/socket", Hw05Web.UserSocket,
     websocket: true,
     longpoll: false
