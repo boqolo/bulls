@@ -50,6 +50,10 @@ export function ch_guess(guess) {
     channel.push("guess", guess).receive("ok", serverUpdate).receive("error", resp => console.log(resp));
 }
 
+export function ch_validate(inputValue) {
+    channel.push("validate", inputValue).receive("ok", serverUpdate).receive("error", resp => console.log(resp));
+}
+
 export function ch_reset() {
     channel.push("reset", {}).receive("ok", serverUpdate).receive("error", resp => console.log(resp));
 }

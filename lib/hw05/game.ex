@@ -1,10 +1,14 @@
 defmodule Hw05.Game do
 
   @max_guesses 8
+  @num_digits 4
+  def num_digits, do: @num_digits
+
+  # answer, guess -> [Integer, Integer, Integer, Integer]
+  # guessHistory  -> %{Integer => [numBulls (Integer), numCows (Integer)]}
 
   def new do
     %{
-      answer: create4Digits(),
       inputValue: "",
       guessHistory: %{},
       gameWon: false,
@@ -13,37 +17,26 @@ defmodule Hw05.Game do
     }
   end
 
-  def makeGuess(guess, %{answer: answer, guessHistory: history} = game0) do
-    if validGuess?(guess) do
-      accuracy = guessAccuracy(guess, answer)
-      if correctGuess?(accuracy) do
+  def makeGuess(guess, answer, %{guessHistory: prevGuesses} = game0) do
+    unless duplicateGuess?(guess, prevGuesses) do
+      if guess == answer do
         %{game0 | gameWon: true}
       else
-        bulls = numBulls(accuracy)
+        bulls = numBulls(guess, answer)
         cows = numCows(guess, answer) - bulls
-        guessNumber = Enum.count(Map.keys(game0.guessHistory))
-        newHistory = Map.put(history, guessNumber, [guess, bulls, cows])
+        guessNumber = Enum.count(prevGuesses)
+        newHistory = Map.put(prevGuesses, guessNumber, [guess, bulls, cows])
         game1 = %{game0 | inputValue: "", guessHistory: newHistory}
-        if Enum.count(Map.keys(game1.guessHistory)) == @max_guesses do
-          %{game1 | game0Over: true}
+        if Enum.count(Map.keys(newHistory)) == @max_guesses do
+          %{game1 | gameOver: true}
         else
-          %{game1 | message: ""}
+          %{game1 | message: ""} # remove user message
         end
       end
     else
-      # TODO append user message
-      %{game0 | message: "Try again playa"}
+      %{game0 | message: "You've already made that guess"}
     end
   end
-
-  def validGuess?(guess) do
-      # TODO
-      true
-  end
-
-  # answer, guess -> [Integer, Integer, Integer, Integer]
-  # guessAccuracy -> [true/false, t/f, t/f, t/f]
-  # guessHistory  -> [numBulls (Integer), numCows (Integer)]
 
   @doc"""
   Generate the 4 random, unique digits in [1, 9] as the answer to a game.
@@ -58,27 +51,11 @@ defmodule Hw05.Game do
   end
 
   @doc"""
-  Given a guess and answer, returns a representation of the accuracy of the
-  guess as a 4-tuple of true/false.
-  """
-  def guessAccuracy(guess, answer) do
-    indices = Enum.count(answer) - 1
-    Enum.map(0..indices, fn(i) -> Enum.at(guess, i) == Enum.at(answer, i) end)
-  end
-
-  @doc"""
-  Check if the guessAccuracy contains all true indicating a correct guess.
-  """
-  def correctGuess?(guessAccuracy) do
-    Enum.all?(guessAccuracy, fn(e) -> e end)
-  end
-
-  @doc"""
   Check if a guess is already represented in the guessHistory.
   """
   def duplicateGuess?(guess, guessHistory) do
     numPrevGuesses = Map.keys(guessHistory)
-    Enum.any?(numPrevGuesses, fn(i) -> {prevGuess, _, _} = Map.get(guessHistory, i)
+    Enum.any?(numPrevGuesses, fn(i) -> [prevGuess, _, _] = Map.get(guessHistory, i)
       prevGuess == guess
     end)
   end
@@ -86,8 +63,14 @@ defmodule Hw05.Game do
   @doc"""
   Calculate the number of correct digits based on the guessAccuracy (count trues)
   """
-  def numBulls(guessAccuracy) do
-    Enum.count(guessAccuracy, fn(correct) -> correct end)
+  def numBulls(guess, answer) do
+    Enum.reduce(0..(@num_digits - 1), 0, fn(i, acc) ->
+      if Enum.at(guess, i) == Enum.at(answer, i) do
+        acc + 1
+      else
+        acc
+      end
+    end)
   end
 
   @doc"""

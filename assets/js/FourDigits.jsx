@@ -1,49 +1,22 @@
 import React from "react";
-import {
-    create4Digits,
-    getGuessAccuracy,
-    isDuplicateGuess,
-    isGuessCorrect,
-    getBulls,
-    getCows
-} from "./logic";
-import { ch_join, ch_guess, ch_reset } from "./socket";
+import { ch_join, ch_guess, ch_reset, ch_validate } from "./socket";
 
 function GuessControls({
     inputValue,
-    setInputValue,
+    inputHandler,
     submitHandler,
     canSubmit
 }) {
 
     /**
-     * Checks if the change in the Input field initiated by key press is valid
-     * (i.e. key pressed is a digit 0-9, the digit is unique, doesn't exceed
-     * 4 digits, or is deleting a character).
-     * @param currInputValue the current value of the input field
-     * @param newInputValue the new value of the input field based on key press
-     * @param keyPressed the key pressed
-     * @returns True if key press is valid
-     */
-    function isValidInput(currInputValue, newInputValue, keyPressed) {
-        const validKeys = "1234567890";
-        return newInputValue.length < currInputValue.length ||
-            (currInputValue.length < newInputValue.length &&
-             !currInputValue.includes(keyPressed)
-             && validKeys.includes(keyPressed));
-    }
-
-    /**
-     * Validate input.
+     * Push input changes server-side for validation.
      * @param ev Keyboard event
      */
     function setTextInput(ev) {
-        // TODO validate (send letter)?
         const newInputValue = ev.target.value;
-        const keyPressed = newInputValue[newInputValue.length - 1];
-        if (isValidInput(inputValue, newInputValue, keyPressed)) {
-            setInputValue(newInputValue);
-        }
+        // send what the updated input would look like. server
+        // will either accept or reject changes.
+        inputHandler(newInputValue);
     }
 
     /**
@@ -51,7 +24,7 @@ function GuessControls({
      * @param ev Keyboard event
      */
     function pressedEnter(ev) {
-        if (ev.key === "Enter") {
+        if (ev.key === "Enter" && canSubmit) {
             submitHandler(inputValue);
         }
     }
@@ -64,7 +37,7 @@ function GuessControls({
                  onChange={setTextInput}/>
           <div className={"buttons-container"}>
             <button className={"pure-button"}
-                    onClick={() => setInputValue("")}>Clear
+                    onClick={() => inputHandler("")}>Clear
             </button>
             <button className={"pure-button pure-button-primary"}
                     disabled={!canSubmit}
@@ -95,10 +68,10 @@ function GuessHistory({guesses}) {
 
 }
 
-function GameOver({answer, restartGame}) {
+function GameOver({restartGame}) {
     return <>
-             <h1>Game Over.</h1>
-             <p>The 4 digits were {answer}</p>
+             <h1>Game Over</h1>
+             <p>Better luck next time...</p>
              <button className={"pure-button pure-button-primary"}
                      onClick={restartGame}>Restart
              </button>
@@ -112,19 +85,13 @@ export default function FourDigits() {
 
     // 4-tuple of digits 0-9
     const [state, setState] = React.useState({
-        answer: undefined, // TODO remove me
         inputValue: "",
         guessHistory: {},
         gameWon: false,
         gameOver: false,
         message: ""
     });
-    const {answer, inputValue, guessHistory, gameWon, gameOver, message} = state;
-    // const [answer, setAnswer] = React.useState(create4Digits());
-    // // Array of [[n, n, n, n], numCorrectDigits, numCorrectPlacement]
-    // const [inputValue, setInputValue] = React.useState("");
-    // const [guessHistory, setGuessHistory] = React.useState([]);
-    // const [gameWon, setGameIsWon] = React.useState(false);
+    const {inputValue, guessHistory, gameWon, gameOver, message} = state;
 
     /**
      * Set channel callback.
@@ -134,10 +101,8 @@ export default function FourDigits() {
         ch_join(setState);
     }, []);
 
-    function setInputValue(newValue) {
-        if (newValue.length <= MAX_DIGITS) {
-            setState({...state, inputValue: newValue});
-        }
+    function pressKey(inputValue) {
+        ch_validate(inputValue);
     }
 
     function restartGame() {
@@ -154,7 +119,7 @@ export default function FourDigits() {
     let body;
 
     if (gameOver) {
-        body = <GameOver answer={answer} restartGame={restartGame}/>;
+        body = <GameOver restartGame={restartGame}/>;
     } else {
         const canSubmit = inputValue.length === MAX_DIGITS;
         body =
@@ -162,14 +127,14 @@ export default function FourDigits() {
               <h1 className={"game-title-header"}>4Digits</h1>
               {gameWon && <>
                             <h1 className={"game-won-header"}>You won!</h1>
-                            <h2>The 4 digits were: {answer}</h2>
+                            <p>The digits were {inputValue}</p>
                             <button className={"pure-button pure-button-primary"}
                                     onClick={restartGame}>Restart
                             </button>
                           </>}
               {!gameWon && <>
        <GuessControls inputValue={inputValue}
-                      setInputValue={setInputValue}
+                      inputHandler={pressKey}
                       submitHandler={submitGuess}
                       guessesSoFar={guessHistory}
                       canSubmit={canSubmit}/>

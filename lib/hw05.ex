@@ -7,10 +7,4 @@ defmodule Hw05 do
   if it comes from the database, an external API or others.
   """
 
-  alias Hw05.Game
-
-  def createInitState do
-    Game.createInitState()
-  end
-
 end
