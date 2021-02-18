@@ -5,7 +5,7 @@ defmodule BullsWeb.GameChannel do
   require Logger
 
   @impl true
-  def join("game:" <> number, _payload, socket0) do
+  def join("game:" <> _number, _payload, socket0) do
     # This is required to be defined to handle joining the channel
     socket1 = assign(socket0, game: Game.new(), answer: Game.create4Digits())
     Logger.debug(inspect(socket1.assigns.answer))

@@ -1,0 +1,38 @@
+Please fill in answers to the questions below:
+
+
+1. What's your name?
+
+Rayyan Abdi
+
+2. What hostname did you deploy to?
+
+hw05.measuringworm.com
+
+3. Which parts of this assignment did you have trouble with, if any?
+
+I had the most trouble with setting up socket.js and recognizing the 
+connection between it and the channel. Also determining the order
+of when the server sends state and when the callback should be
+issued caused a misunderstanding. Playing with the example code
+was a big help.
+
+4. What part of your application state is on the server?
+
+The answer, and the client game state.
+
+5. What part of your application state, if any, is in the browser?
+
+The client game state object which consists of: the input field value,
+guess history, has the game been won, has the game been lost, 
+and a user message for feedback.
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Task 1
+ - Task 2
+ - Task 3
+ - Task 4
+ - Task 5
+ - Task 6
+ - Task 7
+ - Task 8

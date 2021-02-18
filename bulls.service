@@ -1,11 +1,12 @@
 [Unit]
-Description=HW05 Bulls (4Digits)
+Description=Bulls (4Digits)
 
 [Service]
 Type=simple
 User=bulls
 Group=bulls
-Restart=on-failure
+Restart=always
+RestartSec=1
 Environment=MIX_ENV=prod
 Environment=PORT=5690
 Environment=PROD=true
