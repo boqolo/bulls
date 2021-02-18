@@ -126,7 +126,7 @@ export default function FourDigits() {
               <h1 className={"game-title-header"}>4Digits</h1>
               {gameWon && <>
                             <h1 className={"game-won-header"}>You won!</h1>
-                            <p>The digits were {inputValue}</p>
+                            <p>The digits were {inputValue}.</p>
                             <button className={"pure-button pure-button-primary"}
                                     onClick={restartGame}>Restart
                             </button>

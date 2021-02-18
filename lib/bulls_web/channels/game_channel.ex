@@ -8,6 +8,7 @@ defmodule BullsWeb.GameChannel do
   def join("game:" <> number, _payload, socket0) do
     # This is required to be defined to handle joining the channel
     socket1 = assign(socket0, game: Game.new(), answer: Game.create4Digits())
+    Logger.debug(inspect(socket1.assigns.answer))
     {:ok, socket1.assigns.game, socket1} # send response. {status, jsonResp, socketConn}
   end
 
@@ -36,6 +37,7 @@ defmodule BullsWeb.GameChannel do
     %{game: game0} = socket0.assigns
     invalidInput = Regex.match?(~r/\D|0/, inputValue)
     maxInput = String.length(inputValue) > Game.num_digits
+    # reject non-digits, 0, and impose limit
     unless invalidInput || maxInput do
       game1 = %{game0 | inputValue: inputValue}
       socket1 = assign(socket0, game: game1)
