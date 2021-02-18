@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# source: https://gist.github.com/krystofbe/92aed7cd03c9a631eb3c7af490525c4e
+
 set -e
 
 CURRENT_NAME="Bulls"
