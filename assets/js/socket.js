@@ -8,18 +8,19 @@
 // from the params if you are not using authentication.
 import {Socket} from "phoenix";
 
+// NOTE: The below is adapted from Nat Tuck's example code during class.
+
 let appStateCallback, appState = null;
 
 // INIT SOCKET CONNECTION
 let socket = new Socket("/socket", {params: {token: window.userToken}});
 socket.onError(() => console.log("There was a websocket error."));
-socket.onClose(() => console.log("websocket closed"));
+socket.onClose(() => console.log("Websocket closed."));
 
 // Finally, connect to the socket:
 socket.connect();
 
 function serverUpdate(state) {
-    console.log("Received state on socket: ", state);
     appState = state;
     if (appStateCallback) {
         appStateCallback(appState);
@@ -40,8 +41,6 @@ export function ch_join(setState) {
 // Now that you are connected, you can join channels with a topic:
 // let channel = socket.channel("topic:subtopic", {})
 let channel = socket.channel("game:1", {});
-channel.onError(() => console.log("There was a channel error."));
-channel.onClose(() => console.log("channel closed"));
 channel.join()
     .receive("ok", serverUpdate)
     .receive("error", resp => { console.log("Unable to join channel", resp); });

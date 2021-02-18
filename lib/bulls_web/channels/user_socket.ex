@@ -6,7 +6,7 @@ defmodule BullsWeb.UserSocket do
   # via websockets.
 
   ## Channels
-  # TODO: set up Channel routes here. They will pattern
+  # Set up Channel routes here. They will pattern
   # match on Topic strings and dispatch to the
   # given Channel module.
   channel "game:*", BullsWeb.GameChannel

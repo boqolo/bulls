@@ -2,11 +2,15 @@ defmodule Bulls.Game do
 
   @max_guesses 8
   @num_digits 4
-  def num_digits, do: @num_digits
+  def num_digits, do: @num_digits # getter for mod attr
 
+  ### Data Definitions
   # answer, guess -> [Integer, Integer, Integer, Integer]
-  # guessHistory  -> %{Integer => [numBulls (Integer), numCows (Integer)]}
+  # guessHistory  -> %{Integer => [Integer (numBulls), Integer (numCows)]}
 
+  @doc"""
+  Create an empty game state.
+  """
   def new do
     %{
       inputValue: "",
@@ -17,6 +21,11 @@ defmodule Bulls.Game do
     }
   end
 
+  @doc"""
+  Given a guess, answer, and game state, returns a new game state
+  reflecting the outcome of making the guess on the game if it is
+  invalid, correct, or incorrect.
+  """
   def makeGuess(guess, answer, %{guessHistory: prevGuesses} = game0) do
     unless duplicateGuess?(guess, prevGuesses) do
       if guess == answer do
@@ -61,7 +70,7 @@ defmodule Bulls.Game do
   end
 
   @doc"""
-  Calculate the number of correct digits based on the guessAccuracy (count trues)
+  Calculate the number of correct digits in the guess from the answer.
   """
   def numBulls(guess, answer) do
     Enum.reduce(0..(@num_digits - 1), 0, fn(i, acc) ->

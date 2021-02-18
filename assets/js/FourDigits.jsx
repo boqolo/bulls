@@ -55,7 +55,7 @@ function GuessHistory({guesses}) {
           <label className={"guess-list-label"}>Guesses:</label>
           <div className={"pure-g guess-list"}>
             {Object.keys(guesses).map(k => {
-                return <div className={"pure-u-1-1 guess-item"}>
+                return <div key={k.toString()} className={"pure-u-1-1 guess-item"}>
                          <div className={"pure-u-1-6"}>#{parseInt(k) + 1}</div>
                          <div className={"pure-u-1-4"}>{guesses[k][0]}</div>
                          <div className={"pure-u-1-4"}>B: {guesses[k][1]}</div>
@@ -97,7 +97,6 @@ export default function FourDigits() {
      * Set channel callback.
      */
     React.useEffect(function() {
-        console.log("Joining socket and setting callback from main component.");
         ch_join(setState);
     }, []);
 
@@ -143,7 +142,7 @@ export default function FourDigits() {
                  onClick={restartGame}>Restart
          </button>
        </div>
-       {message && !canSubmit && <div className="alert-warning">{message}</div>}
+       {message && <div className="alert-warning">{message}</div>}
      </>}
               <GuessHistory guesses={guessHistory}/>
             </>;
