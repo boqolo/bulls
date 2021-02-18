@@ -1,7 +1,7 @@
-defmodule Hw05Web.GameChannel do
-  use Hw05Web, :channel # imports module functions to ns
+defmodule BullsWeb.GameChannel do
+  use BullsWeb, :channel # imports module functions to ns
 
-  alias Hw05.{Game, SecretAgent} # aliasing modules for easier use
+  alias Bulls.{Game, SecretAgent} # aliasing modules for easier use
   require Logger
 
   @impl true

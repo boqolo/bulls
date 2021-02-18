@@ -1,5 +1,5 @@
-defmodule Hw05Web.Router do
-  use Hw05Web, :router
+defmodule BullsWeb.Router do
+  use BullsWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,14 @@ defmodule Hw05Web.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Hw05Web do
+  scope "/", BullsWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Hw05Web do
+  # scope "/api", BullsWeb do
   #   pipe_through :api
   # end
 
@@ -36,7 +36,7 @@ defmodule Hw05Web.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: Hw05Web.Telemetry
+      live_dashboard "/dashboard", metrics: BullsWeb.Telemetry
     end
   end
 end

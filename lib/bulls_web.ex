@@ -1,12 +1,12 @@
-defmodule Hw05Web do
+defmodule BullsWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use Hw05Web, :controller
-      use Hw05Web, :view
+      use BullsWeb, :controller
+      use BullsWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule Hw05Web do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: Hw05Web
+      use Phoenix.Controller, namespace: BullsWeb
 
       import Plug.Conn
-      import Hw05Web.Gettext
-      alias Hw05Web.Router.Helpers, as: Routes
+      import BullsWeb.Gettext
+      alias BullsWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/hw05_web/templates",
-        namespace: Hw05Web
+        root: "lib/bulls_web/templates",
+        namespace: BullsWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -54,7 +54,7 @@ defmodule Hw05Web do
   def channel do
     quote do
       use Phoenix.Channel
-      import Hw05Web.Gettext
+      import BullsWeb.Gettext
     end
   end
 
@@ -66,9 +66,9 @@ defmodule Hw05Web do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import Hw05Web.ErrorHelpers
-      import Hw05Web.Gettext
-      alias Hw05Web.Router.Helpers, as: Routes
+      import BullsWeb.ErrorHelpers
+      import BullsWeb.Gettext
+      alias BullsWeb.Router.Helpers, as: Routes
     end
   end
 

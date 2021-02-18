@@ -1,5 +1,5 @@
-defmodule Hw05Web.ErrorView do
-  use Hw05Web, :view
+defmodule BullsWeb.ErrorView do
+  use BullsWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

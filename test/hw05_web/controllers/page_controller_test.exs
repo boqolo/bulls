@@ -1,5 +1,5 @@
-defmodule Hw05Web.PageControllerTest do
-  use Hw05Web.ConnCase
+defmodule BullsWeb.PageControllerTest do
+  use BullsWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

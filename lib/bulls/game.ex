@@ -1,4 +1,4 @@
-defmodule Hw05.Game do
+defmodule Bulls.Game do
 
   @max_guesses 8
   @num_digits 4

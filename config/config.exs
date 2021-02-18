@@ -8,11 +8,11 @@
 use Mix.Config
 
 # Configures the endpoint
-config :hw05, Hw05Web.Endpoint,
+config :bulls, BullsWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "hH+VgfUUT8ts85ATrpjNt0Hn4wl34+esl4jz52SLFpBbUkfrIuOwknXkMG5x+OPD",
-  render_errors: [view: Hw05Web.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Hw05.PubSub,
+  render_errors: [view: BullsWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Bulls.PubSub,
   live_view: [signing_salt: "IclTZoEJ"]
 
 # Configures Elixir's Logger

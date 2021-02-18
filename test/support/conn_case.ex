@@ -1,4 +1,4 @@
-defmodule Hw05Web.ConnCase do
+defmodule BullsWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule Hw05Web.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use Hw05Web.ConnCase, async: true`, although
+  by setting `use BullsWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,12 +22,12 @@ defmodule Hw05Web.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import Hw05Web.ConnCase
+      import BullsWeb.ConnCase
 
-      alias Hw05Web.Router.Helpers, as: Routes
+      alias BullsWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint Hw05Web.Endpoint
+      @endpoint BullsWeb.Endpoint
     end
   end
 

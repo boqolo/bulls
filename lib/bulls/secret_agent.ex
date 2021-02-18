@@ -1,7 +1,7 @@
-defmodule Hw05.SecretAgent do
+defmodule Bulls.SecretAgent do
   use Agent
 
-  alias Hw05.Game
+  alias Bulls.Game
 
   @impl true
   def start_link(_gameId) do

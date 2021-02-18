@@ -1,9 +1,9 @@
-defmodule Hw05.MixProject do
+defmodule Bulls.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :hw05,
+      app: :bulls,
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Hw05.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Hw05.Application, []},
+      mod: {Bulls.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

@@ -1,5 +1,5 @@
-defmodule Hw05Web.LayoutViewTest do
-  use Hw05Web.ConnCase, async: true
+defmodule BullsWeb.LayoutViewTest do
+  use BullsWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and
   # use functions such as safe_to_string() to convert the helper

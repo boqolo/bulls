@@ -1,12 +1,12 @@
-defmodule Hw05Web.Endpoint do
-  use Phoenix.Endpoint, otp_app: :hw05
+defmodule BullsWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :bulls
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_hw05_key",
+    key: "_bulls_key",
     signing_salt: "AD3tStw+"
   ]
 
@@ -14,7 +14,7 @@ defmodule Hw05Web.Endpoint do
   # They are called when setting up a Channel
   # connection. This can set up connections to any Topics.
   # Can also set default data in socket.assigns here.
-  socket "/socket", Hw05Web.UserSocket,
+  socket "/socket", BullsWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -26,7 +26,7 @@ defmodule Hw05Web.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :hw05,
+    from: :bulls,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
@@ -53,5 +53,5 @@ defmodule Hw05Web.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug Hw05Web.Router
+  plug BullsWeb.Router
 end

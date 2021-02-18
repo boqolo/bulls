@@ -13,9 +13,9 @@ export PORT=5690
 
 echo "Stopping old copy of app, if any..."
 
-_build/prod/rel/hw05/bin/hw05 stop || true
+_build/prod/rel/bulls/bin/bulls stop || true
 
 echo "Starting app..."
 
-_build/prod/rel/hw05/bin/hw05 start
+_build/prod/rel/bulls/bin/bulls start
 

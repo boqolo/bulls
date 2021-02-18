@@ -1,4 +1,4 @@
-defmodule Hw05Web.UserSocket do
+defmodule BullsWeb.UserSocket do
   use Phoenix.Socket
 
   # THIS IS THE SOCKET HANDLER!!!
@@ -9,7 +9,7 @@ defmodule Hw05Web.UserSocket do
   # TODO: set up Channel routes here. They will pattern
   # match on Topic strings and dispatch to the
   # given Channel module.
-  channel "game:*", Hw05Web.GameChannel
+  channel "game:*", BullsWeb.GameChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -34,7 +34,7 @@ defmodule Hw05Web.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     Hw05Web.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
+  #     BullsWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   @impl true

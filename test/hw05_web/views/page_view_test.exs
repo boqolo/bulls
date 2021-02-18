@@ -1,3 +1,3 @@
-defmodule Hw05Web.PageViewTest do
-  use Hw05Web.ConnCase, async: true
+defmodule BullsWeb.PageViewTest do
+  use BullsWeb.ConnCase, async: true
 end
