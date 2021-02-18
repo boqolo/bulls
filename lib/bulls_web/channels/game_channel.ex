@@ -1,7 +1,7 @@
 defmodule BullsWeb.GameChannel do
   use BullsWeb, :channel # imports module functions to ns
 
-  alias Bulls.{Game, SecretAgent} # aliasing modules for easier use
+  alias Bulls.{Game} # aliasing modules for easier use
   require Logger
 
   @impl true
@@ -18,8 +18,7 @@ defmodule BullsWeb.GameChannel do
     %{game: game, answer: answer} = socket0.assigns
     Logger.debug(inspect(socket0.assigns.game))
     updatedGame = guessStr
-    |> String.graphemes()
-    |> Enum.map(fn(d) -> elem(Integer.parse(d), 0) end) # convert
+    |> parseGuess()
     |> Game.makeGuess(answer, game)
     socket1 = assign(socket0, game: updatedGame)
     {:reply, {:ok, updatedGame}, socket1} # {status, {status response}, socketConn}
@@ -35,16 +34,34 @@ defmodule BullsWeb.GameChannel do
   @impl true
   def handle_in("validate", inputValue, socket0) do
     %{game: game0} = socket0.assigns
-    invalidInput = Regex.match?(~r/\D|0/, inputValue)
-    maxInput = String.length(inputValue) > Game.num_digits
-    # reject non-digits, 0, and impose limit
-    unless invalidInput || maxInput do
+    # reject non-digits, 0, duplicated digits, and impose limit
+    unless invalidInput?(inputValue) do
       game1 = %{game0 | inputValue: inputValue}
       socket1 = assign(socket0, game: game1)
       {:reply, {:ok, game1}, socket1}
     else
       {:reply, {:ok, game0}, socket0}
     end
+  end
+
+  @doc"""
+  Checks if given input string could form a valid guess.
+  """
+  defp invalidInput?(inputValue) do
+    invalidChar = Regex.match?(~r/\D|0/, inputValue)
+    maxInput = String.length(inputValue) > Game.num_digits
+    duplicateDigit = Enum.count(Enum.uniq(String.graphemes(inputValue))) < String.length(inputValue)
+    invalidChar || duplicateDigit || maxInput
+  end
+
+  @doc"""
+  Converts a valid guess string (string of 4 unique digits) into a
+  a guess tuple [Integer, Integer, Integer, Integer] for processing.
+  """
+  defp parseGuess(guessStr) do
+    guessStr
+    |> String.graphemes()
+    |> Enum.map(fn(d) -> elem(Integer.parse(d), 0) end)
   end
 
 end
