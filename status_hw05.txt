@@ -19,7 +19,7 @@ was a big help.
 
 4. What part of your application state is on the server?
 
-The answer, and the client game state.
+The answer, and the client game state (as part of socket assigns).
 
 5. What part of your application state, if any, is in the browser?
 
