@@ -14,6 +14,16 @@ You can also run your app inside IEx (Interactive Elixir) as:
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+### Deployment
+
+You will need a production secret key base and set it as an env variable. Generate with
+
+    mix phx.gen.secret
+
+and then
+
+    export SECRET_KEY_BASE=REALLY_LONG_SECRET
+
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
