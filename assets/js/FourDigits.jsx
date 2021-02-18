@@ -70,7 +70,8 @@ function GuessHistory({guesses}) {
 
 function GameOver({restartGame}) {
     return <>
-             <h1>Game Over</h1>
+             <h1 className={"game-over-header"}>Game Over</h1>
+             <h3>You ran out of guesses.</h3>
              <p>Better luck next time...</p>
              <button className={"pure-button pure-button-primary"}
                      onClick={restartGame}>Restart

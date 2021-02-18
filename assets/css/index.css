@@ -45,6 +45,10 @@ input:focus {
     color: var(--green);
 }
 
+.game-over-header {
+    color: var(--red);
+}
+
 .game-container {
     width: 360px;
     background: var(--greyish);
